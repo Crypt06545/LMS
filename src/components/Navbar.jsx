@@ -10,8 +10,8 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 w-full z-50 flex items-center backdrop-blur-2xl justify-between px-6 sm:px-10 md:px-14 lg:px-36 py-4 text-white">
       {/* Logo */}
       <div className="flex items-center gap-2">
-        <GraduationCap className="w-8 h-8 lg:w-10 lg:h-10" />
-        <span className="text-xl lg:text-2xl font-semibold tracking-wide">
+        <GraduationCap className="w-8 h-8 lg:w-10 lg:h-10 text-[#e05d38]" />
+        <span className="text-xl  lg:text-2xl font-semibold tracking-wide">
           EduFord
         </span>
       </div>
