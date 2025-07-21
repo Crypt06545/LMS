@@ -18,16 +18,17 @@ const Navbar = () => {
 
       {/* Desktop menu */}
       <div className="hidden md:flex items-center gap-8 text-gray-300">
-        <Button className="bg-transparent border border-gray-600 hover:border-white hover:text-white px-4 py-2 rounded-md transition">
+        <button className="px-5 py-2 font-medium hover:text-white transition">
           Become Educator
-        </Button>
+        </button>
         <Link
           to="/my-enrollments"
           className="hover:text-white transition font-medium"
         >
           My Enrollments
         </Link>
-        <Button className="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-full transition">
+
+        <Button className="bg-transparent border border-gray-600 hover:border-white hover:text-white px-4 py-2 rounded-md transition">
           Create Account
         </Button>
       </div>
@@ -50,7 +51,6 @@ const Navbar = () => {
       </div>
 
       {/* Mobile menu */}
-
     </nav>
   );
 };

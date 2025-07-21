@@ -39,12 +39,12 @@ const Hero = () => {
             />
 
             {/* Button inside input */}
-            <Button className="absolute right-2 top-1/2 -translate-y-1/2 h-8 px-4 text-sm">
+            <Button className="absolute right-2 top-1/2 -translate-y-1/2 h-8 px-4 text-sm bg-transparent border border-gray-600 hover:border-white hover:text-white cursor-pointer py-2 rounded-md transition">
               Search
             </Button>
           </div>
         </div>
-        {/* company animate section  */}
+        {/* company animate section */}
         <div className="mt-10 overflow-hidden whitespace-nowrap">
           <div className="flex animate-marquee-pingpong">
             {[...logos, ...logos].map((logo, index) => (
