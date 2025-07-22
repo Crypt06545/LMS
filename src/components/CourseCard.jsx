@@ -12,7 +12,7 @@ const CourseCard = () => {
       {allCourses.slice(0, 4).map((course) => (
         <Card
           key={course?._id}
-          className="p-4 h-full flex flex-col gap-1 justify-between bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl shadow-md hover:shadow-xl hover:border-emerald-500 transition-all duration-300"
+          className="p-4 h-full flex flex-col gap-1 justify-between bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl shadow-md hover:shadow-xl hover:border-gray-400 transition-all duration-300"
         >
           {/* Image */}
           <div className="rounded-lg overflow-hidden h-40 mb-4">
@@ -48,7 +48,7 @@ const CourseCard = () => {
 
           {/* Button */}
           <CardFooter className="mt-auto">
-            <button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-sm py-2 rounded-md transition duration-300">
+            <button className=" text-white text-sm py-2 px-4 cursor-pointer rounded-md transition duration-300 bg-transparent border border-gray-600 hover:border-white hover:text-white ">
               Enroll Now
             </button>
           </CardFooter>

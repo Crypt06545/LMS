@@ -14,7 +14,7 @@ const logos = [
 const Hero = () => {
   return (
     <div>
-      <div className="flex text-gray-200 flex-col items-center h-[75vh] lg:min-h-screen pt-20 px-4">
+      <div className="flex text-gray-200 flex-col items-center h-[75vh] lg:h-[85vh] pt-20 px-4">
         <div className="text-center leading-relaxed flex flex-col gap-6 justify-center items-center mx-auto lg:w-[60%]">
           <h1 className="font-bold text-3xl md:text-5xl">
             Empower your future with the courses designed to{" "}
