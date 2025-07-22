@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { Button } from "./ui/button.jsx";
 import { Link } from "react-router-dom";
 import { GraduationCap, MenuIcon, X } from "lucide-react";
+import { useClerk, useUser, UserButton } from "@clerk/clerk-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const { openSignIn } = useClerk();
+  const { user } = useUser();
   return (
     <nav className="fixed top-0 left-0 w-full z-50 flex items-center backdrop-blur-2xl justify-between px-6 sm:px-10 md:px-14 lg:px-36 py-4 text-white">
       {/* Logo */}
@@ -18,19 +20,32 @@ const Navbar = () => {
 
       {/* Desktop menu */}
       <div className="hidden md:flex items-center gap-8 text-gray-300">
-        <button className="px-5 py-2 font-medium hover:text-white transition">
-          Become Educator
-        </button>
-        <Link
-          to="/my-enrollments"
-          className="hover:text-white transition font-medium"
-        >
-          My Enrollments
-        </Link>
+        {user ? (
+          <>
+            <button className="px-5 py-2 font-medium hover:text-white transition">
+              Become Educator
+            </button>
+            <Link
+              to="/my-enrollments"
+              className="hover:text-white transition font-medium"
+            >
+              My Enrollments
+            </Link>
+          </>
+        ) : (
+          ""
+        )}
 
-        <Button className="bg-transparent border border-gray-600 hover:border-white hover:text-white px-4 py-2 rounded-md transition">
-          Create Account
-        </Button>
+        {user ? (
+          <UserButton />
+        ) : (
+          <Button
+            onClick={() => openSignIn()}
+            className="bg-transparent border border-gray-600 hover:border-white hover:text-white px-4 py-2 rounded-md transition"
+          >
+            Create Account
+          </Button>
+        )}
       </div>
 
       {/* Mobile hamburger */}
