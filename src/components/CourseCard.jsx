@@ -35,13 +35,13 @@ const CourseCard = () => {
             </p>
 
             <p className="font-bold text-emerald-400 text-lg">
-              $
               {(
                 course?.coursePrice -
                 (course?.discount * course?.coursePrice) / 100
               ).toFixed(2)}
+              ৳
               <span className="ml-2 text-sm line-through text-gray-500">
-                ${course?.coursePrice}
+                {course?.coursePrice}৳
               </span>
             </p>
           </CardContent>

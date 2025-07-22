@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 
 import { assets } from "../assets/assets";
+import { useNavigate } from "react-router-dom";
 const logos = [
   assets.microsoft,
   assets.walmart_logo,
@@ -11,7 +12,14 @@ const logos = [
   assets.paypal,
 ];
 
-const Hero = () => {
+const Hero = ({ data }) => {
+  const navigate = useNavigate();
+  const [input, setInput] = useState(data ? data : "");
+
+  const onSearchHandeler = (e) => {
+    e.preventDefault();
+    navigate(`/course-list/${input}`);
+  };
   return (
     <div>
       <div className="flex text-gray-200 flex-col items-center h-[75vh] lg:h-[85vh] pt-20 px-4">
@@ -30,20 +38,24 @@ const Hero = () => {
           <div className="relative w-full max-w-md">
             {/* Search icon */}
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-5 w-5" />
+            <form onSubmit={onSearchHandeler}>
+              {/* Input field */}
+              <Input
+                onChange={(e) => setInput(e.target.value)}
+                value={input}
+                type="text"
+                placeholder="Search for course..."
+                className="pl-10 py-6 pr-24"
+              />
 
-            {/* Input field */}
-            <Input
-              type="text"
-              placeholder="Search for course..."
-              className="pl-10 py-6 pr-24"
-            />
-
-            {/* Button inside input */}
-            <Button className="absolute right-2 top-1/2 -translate-y-1/2 h-8 px-4 text-sm bg-transparent border border-gray-600 hover:border-white hover:text-white cursor-pointer py-2 rounded-md transition">
-              Search
-            </Button>
+              {/* Button inside input */}
+              <Button className="absolute right-2 top-1/2 -translate-y-1/2 h-8 px-4 text-sm bg-transparent border border-gray-600 hover:border-white hover:text-white cursor-pointer py-2 rounded-md transition">
+                Search
+              </Button>
+            </form>
           </div>
         </div>
+
         {/* company animate section */}
         <div className="mt-10 overflow-hidden whitespace-nowrap">
           <div className="flex animate-marquee-pingpong">
