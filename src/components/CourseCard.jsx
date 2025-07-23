@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import useCourseStore from "@/store/AllCourse.store";
+import { Rating } from "react-simple-star-rating";
 
 const CourseCard = () => {
   const { allCourses, fetchAllCourses } = useCourseStore();
@@ -29,10 +30,22 @@ const CourseCard = () => {
           </CardTitle>
 
           {/* Content */}
-          <CardContent className="flex-1 text-sm text-gray-400">
-            <p className="line-clamp-2 mb-3">
-              Master the fundamentals in this hands-on course.
-            </p>
+          <CardContent className="flex-1 px-1 text-sm text-gray-400">
+            {/* <p className="line-clamp-2 mb-3">
+              {course?.}
+            </p> */}
+            <div className="flex items-center gap-2 mb-2">
+              <Rating
+                readonly
+                allowFraction
+                size={20}
+                initialValue={Number(course?.courseRatings?.[0]?.rating) || 0}
+                SVGstyle={{ display: "inline-block" }}
+              />
+              <span className="text-sm text-yellow-400 font-medium">
+                {(Number(course?.courseRatings?.[0]?.rating) || 0).toFixed(1)}
+              </span>
+            </div>
 
             <p className="font-bold text-emerald-400 text-lg">
               {(
@@ -47,7 +60,7 @@ const CourseCard = () => {
           </CardContent>
 
           {/* Button */}
-          <CardFooter className="mt-auto">
+          <CardFooter className="p-1 mt-auto">
             <button className=" text-white text-sm py-2 px-4 cursor-pointer rounded-md transition duration-300 bg-transparent border border-gray-600 hover:border-white hover:text-white ">
               Enroll Now
             </button>

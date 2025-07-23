@@ -20,7 +20,7 @@ const Navbar = () => {
 
       {/* Desktop menu */}
       <div className="hidden md:flex items-center gap-8 text-gray-300">
-        {user ? (
+        {user && (
           <>
             <button className="px-5 py-2 font-medium hover:text-white transition">
               Become Educator
@@ -32,8 +32,6 @@ const Navbar = () => {
               My Enrollments
             </Link>
           </>
-        ) : (
-          ""
         )}
 
         {user ? (
