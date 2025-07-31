@@ -1,7 +1,7 @@
 import { dummyCourses } from "@/assets/assets";
 import { create } from "zustand";
 
-const useCourseStore  = create((set) => ({
+const useCourseStore = create((set) => ({
   allCourses: [],
   fetchAllCourses: async () => {
     const courses = await Promise.resolve(dummyCourses);
@@ -9,4 +9,11 @@ const useCourseStore  = create((set) => ({
   },
 }));
 
-export default useCourseStore ;
+export const useUserStore = create((set) => ({
+  user: null,
+  token: null,
+  setUser: (userDate) => set({ user: userDate }),
+  setToken: (userToken) => set({ token: userToken }),
+}));
+
+export default useCourseStore;
