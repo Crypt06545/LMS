@@ -9,11 +9,5 @@ const useCourseStore = create((set) => ({
   },
 }));
 
-export const useUserStore = create((set) => ({
-  user: null,
-  token: null,
-  setUser: (userDate) => set({ user: userDate }),
-  setToken: (userToken) => set({ token: userToken }),
-}));
 
 export default useCourseStore;

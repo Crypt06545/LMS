@@ -1,4 +1,4 @@
-import { useUserStore } from "@/store/AllCourse.store";
+import useUserStore from "@/store/User.Store";
 import { useAuth, useUser } from "@clerk/clerk-react";
 import { useEffect } from "react";
 
