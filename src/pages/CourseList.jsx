@@ -86,9 +86,15 @@ const CourseList = () => {
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-14">
-        {filteredCourse.map((course) => (
-          <CourseCard key={course?._id} course={course} />
-        ))}
+        {filteredCourse.length > 0 ? (
+          filteredCourse.map((course) => (
+            <CourseCard key={course?._id} course={course} />
+          ))
+        ) : (
+          <div className="col-span-full text-center text-gray-200">
+            No course found.
+          </div>
+        )}
       </div>
     </div>
   );
