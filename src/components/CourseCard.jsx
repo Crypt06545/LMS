@@ -1,8 +1,14 @@
 import React from "react";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { Rating } from "react-simple-star-rating";
+import { useNavigate } from "react-router-dom";
 
 const CourseCard = ({ course }) => {
+  const navigate = useNavigate();
+  const handleClick = (id) => {
+    navigate(`/course-details/${id}`);
+    // console.log(id);
+  };
   return (
     <Card
       key={course?._id}
@@ -51,7 +57,10 @@ const CourseCard = ({ course }) => {
 
       {/* Button */}
       <CardFooter className="p-1 mt-auto">
-        <button className=" text-white text-sm py-2 px-4 cursor-pointer rounded-md transition duration-300 bg-transparent border border-gray-600 hover:border-white hover:text-white ">
+        <button
+          onClick={() => handleClick(course?._id)}
+          className=" text-white text-sm py-2 px-4 cursor-pointer rounded-md transition duration-300 bg-transparent border border-gray-600 hover:border-white hover:text-white "
+        >
           Enroll Now
         </button>
       </CardFooter>

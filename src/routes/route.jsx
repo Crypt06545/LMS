@@ -5,6 +5,7 @@ import { createBrowserRouter } from "react-router-dom";
 import ErrorPage from "@/pages/ErrorPage";
 import Home from "@/pages/Home";
 import CourseList from "@/pages/CourseList";
+import CourseDetails from "@/pages/CourseDetails";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: "/course-list/:input",
         element: <CourseList />,
+      },
+      {
+        path: "/course-details/:id",
+        element: <CourseDetails />,
       },
     ],
   },
