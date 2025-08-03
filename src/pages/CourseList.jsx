@@ -1,25 +1,29 @@
+import CourseCard from "@/components/CourseCard";
 import {
   Breadcrumb,
   BreadcrumbItem,
-  BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import useCourseStore from "@/store/AllCourse.store";
 import { Search } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const CourseList = () => {
   const [input, setInput] = useState("");
-
+  const { allCourses, fetchAllCourses } = useCourseStore();
   const onSearchHandler = (e) => {
     e.preventDefault();
     console.log("Searching for:", input);
     // your search logic here
   };
+  useEffect(() => {
+    fetchAllCourses();
+  }, [fetchAllCourses]);
 
   return (
     <div className="container mx-auto text-gray-200 px-4 sm:px-8 min-h-screen">
@@ -68,7 +72,11 @@ const CourseList = () => {
           </form>
         </div>
       </div>
-
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-14">
+        {allCourses.map((course) => (
+          <CourseCard key={course?._id} course={course} />
+        ))}
+      </div>
       {/* Your content below */}
     </div>
   );
