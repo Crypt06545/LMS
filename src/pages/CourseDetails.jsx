@@ -7,6 +7,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Rating } from "react-simple-star-rating";
+import { calculateChapterTime } from "@/utils/calculateTime";
 
 const CourseDetails = () => {
   const { id } = useParams();
@@ -22,8 +24,7 @@ const CourseDetails = () => {
     setCourse(found);
   }, [allCourses, id]);
 
-  if (!course)
-    return <div className="text-white p-10">Loading...</div>;
+  if (!course) return <div className="text-white p-10">Loading...</div>;
 
   const finalPrice = (
     course.coursePrice -
@@ -31,81 +32,77 @@ const CourseDetails = () => {
   ).toFixed(2);
 
   return (
-    <div className="container mx-auto px-4 md:px-8 pt-20 flex flex-col lg:flex-row gap-10 text-white">
+    <div className="container mx-auto px-4 md:px-8 lg:px-20 pt-20 text-left text-white flex flex-col lg:flex-row gap-10">
       {/* Left Section */}
-      <div className="w-full lg:w-2/3 flex flex-col gap-6">
-        <div className="overflow-hidden rounded-xl">
-          <img
-            src={course.courseThumbnail}
-            alt={course.courseTitle}
-            className="w-full h-64 object-cover rounded-xl"
-          />
+      <div className="lg:w-2/3 space-y-6">
+        {/* Title & Description */}
+        <div>
+          <h1 className="font-bold text-3xl text-gray-100">
+            {course?.courseTitle}
+          </h1>
+          <p
+            className="text-gray-300 pt-4 text-sm md:text-base leading-relaxed"
+            dangerouslySetInnerHTML={{
+              __html: course?.courseDescription.slice(0, 200),
+            }}
+          ></p>
+          {/* Ratings and Student Info */}
+          <div className="flex flex-wrap items-center gap-4 text-sm text-gray-300">
+            <div className="flex items-center gap-1">
+              <Rating
+                readonly
+                allowFraction
+                size={20}
+                initialValue={Number(course?.courseRatings?.[0]?.rating) || 0}
+                SVGstyle={{ display: "inline-block" }}
+              />
+              <span className="text-yellow-400 font-medium">
+                {(Number(course?.courseRatings?.[0]?.rating) || 0).toFixed(1)}
+              </span>
+            </div>
+            <div>
+              {course?.courseRatings?.length || 0}{" "}
+              {course?.courseRatings?.length > 1 ? "ratings" : "rating"}
+            </div>
+            <div>
+              {course?.enrolledStudents?.length || 0}{" "}
+              {course?.enrolledStudents?.length > 1 ? "students" : "student"}
+            </div>
+          </div>
+
+          {/* course structure  */}
+          <div className="pt-8 text-gray-200">
+            <h2>Course Structure</h2>
+            <div className="pt-5">
+              {course?.courseContent.map((chapter, ind) => (
+                <Accordion key={ind} type="single" collapsible>
+                  <AccordionItem value="item-1">
+                    <AccordionTrigger>{chapter?.chapterTitle}</AccordionTrigger>
+                    <AccordionContent>
+                      <p>{chapter?.chapterContent.length} lectuer - {calculateChapterTime(chapter)} </p>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              ))}
+            </div>
+          </div>
         </div>
 
-        <div className="bg-white/5 border border-white/10 backdrop-blur-xl p-6 rounded-2xl">
-          <h2 className="text-2xl font-semibold mb-4">Course Description</h2>
-          <div
-            className="prose prose-invert max-w-none"
-            dangerouslySetInnerHTML={{ __html: course.courseDescription }}
-          />
-        </div>
-
-        <div className="bg-white/5 border border-white/10 backdrop-blur-xl p-6 rounded-2xl">
-          <h2 className="text-2xl font-semibold mb-4">Course Content</h2>
-          <Accordion type="single" collapsible className="w-full">
-            {course.courseContent.map((chapter, index) => (
-              <AccordionItem
-                key={chapter.chapterId}
-                value={`item-${index}`}
-                className="border-b border-white/10"
-              >
-                <AccordionTrigger className="text-lg text-left font-medium text-white py-3">
-                  {chapter.chapterTitle}
-                </AccordionTrigger>
-                <AccordionContent className="space-y-3 mt-2">
-                  {chapter.chapterContent.map((lecture) => (
-                    <div
-                      key={lecture.lectureId}
-                      className="flex items-center justify-between text-sm text-gray-300 px-2"
-                    >
-                      <div className="flex gap-2 items-center">
-                        <span>{lecture.lectureTitle}</span>
-                        {lecture.isPreviewFree && (
-                          <span className="text-emerald-400 text-xs">
-                            (Preview)
-                          </span>
-                        )}
-                      </div>
-                      <span className="text-xs">{lecture.lectureDuration} min</span>
-                    </div>
-                  ))}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
+        {/* accordions  */}
       </div>
 
-      {/* Right Section */}
-      <div className="w-full lg:w-1/3 space-y-6">
-        
-
-        <div className="bg-white/5 border border-white/10 backdrop-blur-xl p-6 rounded-2xl space-y-4">
-          <h3 className="text-lg font-semibold">What You'll Learn</h3>
-          <div
-            className="prose prose-invert max-w-none text-sm text-gray-300"
-            dangerouslySetInnerHTML={{ __html: course.courseDescription }}
-          />
+      {/* Right Section - Price & Enrollment */}
+      {/* <div className="lg:w-1/3 bg-gray-800 p-6 rounded-lg shadow-lg space-y-4">
+        <h2 className="text-xl font-semibold text-white">Course Pricing</h2>
+        <div className="text-lg text-gray-300">
+          <p>Original Price: <span className="line-through">${course.coursePrice}</span></p>
+          <p>Discount: <span className="text-green-400">{course.discount}%</span></p>
+          <p className="text-2xl font-bold text-emerald-500">Now: ${finalPrice}</p>
         </div>
-        <div className="bg-white/5 border border-white/10 backdrop-blur-xl p-6 rounded-2xl">
-          <h2 className="text-xl font-semibold mb-2">Price</h2>
-          <p className="text-3xl font-bold text-emerald-400">৳{finalPrice}</p>
-          <p className="text-sm text-gray-400 line-through">৳{course.coursePrice}</p>
-          <button className="mt-4 w-full text-white text-sm py-2 px-4 rounded-md transition duration-300 bg-transparent border border-gray-600 hover:border-white hover:text-white">
-            Enroll Now
-          </button>
-        </div>
-      </div>
+        <button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 rounded-lg font-semibold transition duration-200">
+          Enroll Now
+        </button>
+      </div> */}
     </div>
   );
 };
