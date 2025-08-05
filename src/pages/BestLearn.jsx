@@ -1,4 +1,5 @@
 import CourseCard from "@/components/CourseCard";
+
 import { Button } from "@/components/ui/button";
 import useCourseStore from "@/store/AllCourse.store";
 import React, { useEffect } from "react";
@@ -29,7 +30,7 @@ const BestLearn = () => {
           deliver results.
         </p>
       </div>
-
+      {/* <CourseTabs /> */}
       {/* Course Card Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-14">
         {allCourses.slice(0, 4).map((course) => (
