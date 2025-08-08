@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/accordion";
 import { Rating } from "react-simple-star-rating";
 import { calculateChapterTime } from "@/utils/calculateTime";
+import { AlertCircleIcon, BadgeCheckIcon, CheckIcon } from "lucide-react"
+import { Badge } from "@/components/ui/badge";
 
 const CourseDetails = () => {
   const { id } = useParams();
@@ -70,16 +72,53 @@ const CourseDetails = () => {
             </div>
           </div>
 
-          {/* course structure  */}
+          {/* Course Structure */}
           <div className="pt-8 text-gray-200">
-            <h2>Course Structure</h2>
-            <div className="pt-5">
-              {course?.courseContent.map((chapter, ind) => (
-                <Accordion key={ind} type="single" collapsible>
-                  <AccordionItem value="item-1">
-                    <AccordionTrigger>{chapter?.chapterTitle}</AccordionTrigger>
-                    <AccordionContent>
-                      <p>{chapter?.chapterContent.length} lectuer - {calculateChapterTime(chapter)} </p>
+            <h2 className="text-xl font-semibold text-white">
+              Course Structure
+            </h2>
+            <div className="pt-4 space-y-4">
+              {course?.courseContent.map((chapter, idx) => (
+                <Accordion
+                  key={chapter.chapterId}
+                  type="single"
+                  collapsible
+                  className="border border-white/10 rounded-xl backdrop-blur bg-white/5"
+                >
+                  <AccordionItem value={`item-${idx}`}>
+                    <AccordionTrigger className="px-4 cursor-pointer py-3 text-left text-white font-semibold hover:underline">
+                      <div className="w-full flex items-center justify-between gap-4">
+                        <span className="truncate">{chapter.chapterTitle}</span>
+                        <span className="text-sm text-gray-400 font-normal whitespace-nowrap">
+                          {chapter?.chapterContent.length} lectures –{" "}
+                          {calculateChapterTime(chapter)}
+                        </span>
+                      </div>
+                    </AccordionTrigger>
+
+                    <AccordionContent className="space-y-3 px-4 pb-4">
+                      {chapter.chapterContent.map((lecture) => (
+                        <div
+                          key={lecture.lectureId}
+                          className="flex justify-between items-start bg-white/5 border border-white/10 p-3 rounded-lg hover:shadow-md"
+                        >
+                          <div>
+                            <p className="text-sm md:text-base text-white font-medium">
+                              {lecture.lectureTitle}
+                            </p>
+                            <span className="text-xs text-gray-400">
+                              Duration: {lecture.lectureDuration} min
+                            </span>
+                          </div>
+
+                          {lecture.isPreviewFree && (
+                            // <span className="bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded-md">
+                            //   Preview
+                            // </span>
+                            <Badge  className={'bg-green-500 text-gray-200 font-semibold'}>Preview</Badge>
+                          )}
+                        </div>
+                      ))}
                     </AccordionContent>
                   </AccordionItem>
                 </Accordion>
