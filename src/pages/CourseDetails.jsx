@@ -9,8 +9,14 @@ import {
 } from "@/components/ui/accordion";
 import { Rating } from "react-simple-star-rating";
 import { calculateChapterTime } from "@/utils/calculateTime";
-import { AlertCircleIcon, BadgeCheckIcon, CheckIcon } from "lucide-react"
+import {
+  AlertCircleIcon,
+  BadgeCheckIcon,
+  CheckIcon,
+  SquarePlay,
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import humanizeDuration from "humanize-duration";
 
 const CourseDetails = () => {
   const { id } = useParams();
@@ -87,8 +93,10 @@ const CourseDetails = () => {
                 >
                   <AccordionItem value={`item-${idx}`}>
                     <AccordionTrigger className="px-4 cursor-pointer py-3 text-left text-white font-semibold hover:underline">
-                      <div className="w-full flex items-center justify-between gap-4">
-                        <span className="truncate">{chapter.chapterTitle}</span>
+                      <div className="w-full flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-4">
+                        <span className="truncate sm:max-w-[70%]">
+                          {chapter.chapterTitle}
+                        </span>
                         <span className="text-sm text-gray-400 font-normal whitespace-nowrap">
                           {chapter?.chapterContent.length} lectures –{" "}
                           {calculateChapterTime(chapter)}
@@ -103,19 +111,25 @@ const CourseDetails = () => {
                           className="flex justify-between items-start bg-white/5 border border-white/10 p-3 rounded-lg hover:shadow-md"
                         >
                           <div>
-                            <p className="text-sm md:text-base text-white font-medium">
-                              {lecture.lectureTitle}
-                            </p>
+                            <div className="flex items-start gap-2">
+                              <SquarePlay className="w-4 h-4 text-gray-400 shrink-0 mt-[3px]" />
+                              <p className="text-sm md:text-base text-white font-medium leading-snug">
+                                {lecture.lectureTitle}
+                              </p>
+                            </div>
                             <span className="text-xs text-gray-400">
-                              Duration: {lecture.lectureDuration} min
+                              Duration:{" "}
+                              {humanizeDuration(
+                                lecture?.lectureDuration * 60 * 1000,
+                                { units: ["h", "m"] }
+                              )}
                             </span>
                           </div>
 
                           {lecture.isPreviewFree && (
-                            // <span className="bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded-md">
-                            //   Preview
-                            // </span>
-                            <Badge  className={'bg-green-500 text-gray-200 font-semibold'}>Preview</Badge>
+                            <Badge className="bg-green-500 text-gray-200 font-semibold">
+                              Preview
+                            </Badge>
                           )}
                         </div>
                       ))}
