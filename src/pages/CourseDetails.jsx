@@ -45,7 +45,7 @@ const CourseDetails = () => {
       <div className="px-4 md:px-8 lg:px-20 pt-20 text-left text-gray-200 flex flex-col lg:flex-row gap-10">
         {/* left side  */}
 
-        <div className="p-4 flex flex-col gap-4 bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl shadow-md max-w-md">
+        <div className="p-4 flex flex-col gap-4 bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl shadow-md max-w-md self-start">
           {/* Image */}
           <div className="rounded-lg overflow-hidden h-52 mb-4">
             <img
@@ -63,10 +63,7 @@ const CourseDetails = () => {
           {/* Price info */}
           <p className="font-bold text-emerald-400 text-2xl">
             ৳{" "}
-            {(
-              course?.coursePrice -
-              (course?.discount * course?.coursePrice) / 100
-            ).toFixed(2)}
+            {finalPrice}
             <span className="ml-2 text-sm line-through text-gray-500">
               ৳{course?.coursePrice}
             </span>
