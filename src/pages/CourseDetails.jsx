@@ -13,17 +13,21 @@ import {
   calculateCourseDuration,
   calculateNoOfLectures,
 } from "@/utils/calculateTime";
-import { BookOpenText, CalendarClock, Clock, SquarePlay } from "lucide-react";
+import { BookOpenText, Clock, SquarePlay } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import humanizeDuration from "humanize-duration";
 import { Button } from "@/components/ui/button";
+import YouTube from "react-youtube";
+import Loading from "@/components/Loading";
 
 const CourseDetails = () => {
   const { id } = useParams();
   const { allCourses, fetchAllCourses } = useCourseStore();
   const [course, setCourse] = useState(null);
   const [isAlreadyEnrolled, setIsAlreadyEnrolled] = useState(false);
+  const [playerData, setPlayerData] = useState(null);
 
+  
   useEffect(() => {
     fetchAllCourses();
   }, [fetchAllCourses]);
@@ -33,7 +37,7 @@ const CourseDetails = () => {
     setCourse(found);
   }, [allCourses, id]);
 
-  if (!course) return <div className="text-white p-10">Loading...</div>;
+  if (!course) return <Loading />;
 
   const finalPrice = (
     course?.coursePrice -
@@ -47,13 +51,26 @@ const CourseDetails = () => {
 
         <div className="p-4 flex flex-col gap-4 bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl shadow-md max-w-md self-start">
           {/* Image */}
-          <div className="rounded-lg overflow-hidden h-52 mb-4">
-            <img
-              src={course?.courseThumbnail}
-              alt={course?.courseTitle}
-              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+
+          {playerData ? (
+            <YouTube
+              videoId={playerData?.videoId}
+              opts={{
+                playerVars: {
+                  autoplay: 1,
+                },
+              }}
+              iframeClassName="w-full aspect-video"
             />
-          </div>
+          ) : (
+            <div className="rounded-lg overflow-hidden h-52 mb-4">
+              <img
+                src={course?.courseThumbnail}
+                alt={course?.courseTitle}
+                className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+          )}
 
           {/* Title */}
           <h2 className="text-2xl font-semibold text-gray-100 line-clamp-2">
@@ -62,8 +79,7 @@ const CourseDetails = () => {
 
           {/* Price info */}
           <p className="font-bold text-emerald-400 text-2xl">
-            ৳{" "}
-            {finalPrice}
+            ৳ {finalPrice}
             <span className="ml-2 text-sm line-through text-gray-500">
               ৳{course?.coursePrice}
             </span>
@@ -86,11 +102,11 @@ const CourseDetails = () => {
           </div>
 
           {/* Enroll Button */}
-          <button
+          <Button
             onClick={() => {
               /* Your enroll logic here */
             }}
-            className={`mt-6 w-full text-white text-sm py-3 rounded-md transition duration-300 
+            className={`cursor-pointer mt-6 w-full text-white text-sm py-3 rounded-md transition duration-300 
       ${
         isAlreadyEnrolled
           ? "bg-gray-600 cursor-not-allowed"
@@ -99,7 +115,7 @@ const CourseDetails = () => {
             disabled={isAlreadyEnrolled}
           >
             {isAlreadyEnrolled ? "Already Enrolled" : "Enroll Now"}
-          </button>
+          </Button>
         </div>
 
         {/* right Section */}
@@ -189,7 +205,16 @@ const CourseDetails = () => {
                               </span>
                             </div>
                             {lecture.isPreviewFree && (
-                              <Badge className="bg-green-500 text-gray-200 font-semibold">
+                              <Badge
+                                onClick={() =>
+                                  setPlayerData({
+                                    videoId: lecture?.lectureUrl
+                                      .split("/")
+                                      .pop(),
+                                  })
+                                }
+                                className="bg-green-500 text-gray-200 font-semibold"
+                              >
                                 Preview
                               </Badge>
                             )}
