@@ -6,6 +6,7 @@ import ErrorPage from "@/pages/ErrorPage";
 import Home from "@/pages/Home";
 import CourseList from "@/pages/CourseList";
 import CourseDetails from "@/pages/CourseDetails";
+import MyEnrollment from "@/pages/MyEnrollment";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/course-details/:id",
         element: <CourseDetails />,
+      },
+      {
+        path: "/my-enrollments",
+        element: <MyEnrollment />,
       },
     ],
   },

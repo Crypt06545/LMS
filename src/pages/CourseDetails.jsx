@@ -27,7 +27,7 @@ const CourseDetails = () => {
   const [isAlreadyEnrolled, setIsAlreadyEnrolled] = useState(false);
   const [playerData, setPlayerData] = useState(null);
 
-  
+
   useEffect(() => {
     fetchAllCourses();
   }, [fetchAllCourses]);
@@ -213,7 +213,7 @@ const CourseDetails = () => {
                                       .pop(),
                                   })
                                 }
-                                className="bg-green-500 text-gray-200 font-semibold"
+                                className="bg-green-500 text-gray-200 cursor-pointer font-semibold"
                               >
                                 Preview
                               </Badge>
