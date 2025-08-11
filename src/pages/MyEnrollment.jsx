@@ -11,7 +11,15 @@ import useEnrolledCoursesStore from "@/store/EnrolledCourses.store";
 import { calculateCourseDuration } from "@/utils/calculateTime";
 import { Line } from "rc-progress";
 
+import { AlertCircleIcon, BadgeCheckIcon, CheckIcon } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { useNavigate } from "react-router-dom";
+
 const MyEnrollment = () => {
+  const navigate = useNavigate();
+  const handleClick = (id) => {
+    navigate(`/player/${id}`);
+  };
   const { enrolledCourses, fetchEnrolledCourses } = useEnrolledCoursesStore();
 
   const [progressArray] = useState([
@@ -86,7 +94,25 @@ const MyEnrollment = () => {
 
                   <TableCell>{calculateCourseDuration(course)}</TableCell>
                   <TableCell>Credit Card</TableCell>
-                  <TableCell className="text-right">$250.00</TableCell>
+                  <TableCell className="text-right">
+                    {progressArray[ind] &&
+                    progressArray[ind].lectureCompleted /
+                      progressArray[ind].totallectures ===
+                      1 ? (
+                      <Badge className="bg-emerald-500 hover:bg-emerald-600 text-white dark:bg-emerald-600 dark:hover:bg-emerald-700">
+                        <CheckIcon className="h-4 w-4 mr-1" />
+                        Completed
+                      </Badge>
+                    ) : (
+                      <Badge
+                        onClick={() => handleClick(course._id)}
+                        className="cursor-pointer bg-amber-500 hover:bg-amber-600 text-white dark:bg-amber-600 dark:hover:bg-amber-700"
+                      >
+                        <AlertCircleIcon className="h-4 w-4 mr-1" />
+                        Ongoing
+                      </Badge>
+                    )}
+                  </TableCell>
                 </TableRow>
               );
             })}
@@ -102,7 +128,7 @@ const MyEnrollment = () => {
         )}
       </Table>
 
-      {console.log(enrolledCourses)}
+      {/* {console.log(enrolledCourses)} */}
     </div>
   );
 };

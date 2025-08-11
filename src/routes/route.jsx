@@ -7,6 +7,7 @@ import Home from "@/pages/Home";
 import CourseList from "@/pages/CourseList";
 import CourseDetails from "@/pages/CourseDetails";
 import MyEnrollment from "@/pages/MyEnrollment";
+import Player from "@/pages/Player";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "/my-enrollments",
         element: <MyEnrollment />,
+      },
+      {
+        path: "/player/:id",
+        element: <Player />,
       },
     ],
   },
